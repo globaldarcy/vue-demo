@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .red{color:red;}
+        .fontSize{font-size:30px;}
+    </style>
+    <script src="src/vue.min.js"></script>
+</head>
+<body>
+    <div id="demo">
+        <span class="fontSize" :class="{red:addClass}">{{message}}</span>
+    </div>
+
+    <script>
+        let obj = {
+            message: '<b>Hello Vue.js</b>',
+            addClass:true
+        };
+        var vm = new Vue({
+            el:'#demo',
+            data:obj,
+            render: function (ele) {
+                return ele(
+                    "ul",
+                    {
+                        class:{
+                            red:true,
+                            fontSize:true
+                        },
+                        style:{
+                            backgroundColor:'orange'
+                        }
+                    },
+                    [
+                        ele("li",1),
+                        ele("li",2),
+                        ele("li",3),
+                        ele("li",4)
+                    ]
+                )
+            }
+        });
+
+        /*var arr = [1,2,3,4,5];
+        var newArr = [];
+        for(var i of arr){
+            newArr.push(i*2);
+        }
+        console.log(newArr);*/
+
+
+
+
+
+
+
+    </script>
+</body>
+</html>
