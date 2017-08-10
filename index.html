@@ -3,60 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <style>
-        .red{color:red;}
-        .fontSize{font-size:30px;}
-    </style>
     <script src="src/vue.min.js"></script>
+    <link rel="stylesheet" href="index.css">
 </head>
 <body>
-    <div id="demo">
-        <span class="fontSize" :class="{red:addClass}">{{message}}</span>
+<div class="page-top">
+    <div class="page-content">
+        <h2>任务计划列表</h2>
     </div>
+</div>
+<div class="main">
+    <h3 class="big-title">添加任务：</h3>
+    <input
+        placeholder="例如：吃饭睡觉打豆豆；    提示：+回车即可添加任务"
+        class="task-input"
+        type="text"
 
-    <script>
-        let obj = {
-            message: '<b>Hello Vue.js</b>',
-            addClass:true
-        };
-        var vm = new Vue({
-            el:'#demo',
-            data:obj,
-            render: function (ele) {
-                return ele(
-                    "ul",
-                    {
-                        class:{
-                            red:true,
-                            fontSize:true
-                        },
-                        style:{
-                            backgroundColor:'orange'
-                        }
-                    },
-                    [
-                        ele("li",1),
-                        ele("li",2),
-                        ele("li",3),
-                        ele("li",4)
-                    ]
-                )
-            }
-        });
+        v-on:keyup.enter="addToDo(123, $event)"
+        v-model="todo"
+    />
+    <ul class="task-count" v-show="list.length">
+        <li>1个任务未完成</li>
+        <li class="action">
+            <a class="active" href="#">所有任务</a>
+            <a href="#">未完成的任务</a>
+            <a href="#">完成的任务</a>
+        </li>
+    </ul>
+    <h3 class="big-title">任务列表：</h3>
+    <div class="tasks">
 
-        /*var arr = [1,2,3,4,5];
-        var newArr = [];
-        for(var i of arr){
-            newArr.push(i*2);
-        }
-        console.log(newArr);*/
-
-
-
-
-
-
-
-    </script>
+        <span class="no-task-tip" v-show="!list.length">还没有添加任何任务</span>
+        <ul class="todo-list">
+            <li class="todo" v-bind:class="{completed:item.isChecked}" v-for="item in list">
+                <div class="view">
+                    <input class="toggle" type="checkbox" v-model="item.isChecked">
+                    <label >{{ item.title }}</label>
+                    <button class="destroy" v-on:click="delTodo(item)"></button>
+                </div>
+                <input class="edit" type="text" >
+            </li>
+        </ul>
+    </div>
+</div>
+<script src=app.js></script>
 </body>
 </html>
