@@ -1,35 +1,96 @@
 /**
  * Created by Shawn on 2017/8/10.
  */
-var list = [
+var storeA = {
+    saveStorage(key, value){
+        localStorage.setItem(key, JSON.stringify(value));
+    },
+    fetchGet(key){
+        return JSON.parse(localStorage.getItem(key)) || [];
+    }
+};
+
+var list = storeA.fetchGet("storeAge");
+
+
+/*var list = [
     {
         title:"吃饭睡觉打豆豆",
-        isChecked:false
+        isCheck:false
     },
     {
-        title:"sdfsdfksdlgsdlklsdg",
-        isChecked:true
+        title:"吃饭睡觉",
+        isCheck:true
     }
-];
+];*/
 
-new Vue({
+var vm = new Vue({
     el:".main",
     data:{
         list:list,
-        todo:""
+        todo:"",
+        edits:"",
+        beforeTitle:""
+    },
+    /*watch:{
+        //list(){
+        //    storeA.saveStorage("storeAge", this.list)
+        //}
+        list:{
+            handler(){
+                storeA.saveStorage("storeAge", this.list)
+            },
+            deep: true
+        }
+    },*/
+    computed:{
+        noCheckLength(){
+            return this.list.filter(function(item){
+                return !item.isCheck
+            }).length;
+        }
     },
     methods:{
-        addToDo (data, ev) {
-            console.log(data,ev)
+        addToDo () {
+            //console.log(event);
             this.list.push({
                 title:this.todo,
-                isChecked:false
+                isCheck:false
             });
             this.todo = "";
         },
-        delTodo (todo) {
-            let i = this.list.indexOf(todo);
+        delTodo (item) {
+            let i = this.list.indexOf(item);
             this.list.splice(i,1);
+        },
+        edit (item) {
+            this.edits = item;
+            this.beforeTitle = item.title;
+        },
+        edited (item) {
+            this.edits = "";
+        },
+        cancel (item) {
+            item.title = this.beforeTitle;
+            this.beforeTitle = "";
+            this.edits = "";
+        }
+    },
+    directives:{
+        "focu":{
+            update(el, bind){
+                //console.log(bind);
+                if(bind.value){
+                    el.focus();
+                }
+            }
         }
     }
 });
+
+vm.$watch('list', function handler(){
+        storeA.saveStorage("storeAge", this.list)
+    }, {
+        deep: true
+    }
+);

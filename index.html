@@ -18,12 +18,11 @@
         placeholder="例如：吃饭睡觉打豆豆；    提示：+回车即可添加任务"
         class="task-input"
         type="text"
-
-        v-on:keyup.enter="addToDo(123, $event)"
+        v-on:keyup.enter="addToDo"
         v-model="todo"
     />
     <ul class="task-count" v-show="list.length">
-        <li>1个任务未完成</li>
+        <li>{{ noCheckLength }}个任务未完成</li>
         <li class="action">
             <a class="active" href="#">所有任务</a>
             <a href="#">未完成的任务</a>
@@ -32,16 +31,22 @@
     </ul>
     <h3 class="big-title">任务列表：</h3>
     <div class="tasks">
-
         <span class="no-task-tip" v-show="!list.length">还没有添加任何任务</span>
         <ul class="todo-list">
-            <li class="todo" v-bind:class="{completed:item.isChecked}" v-for="item in list">
+            <li class="todo" v-bind:class="{completed:item.isCheck, editing:item === edits}" v-for="item in list">
                 <div class="view">
-                    <input class="toggle" type="checkbox" v-model="item.isChecked">
-                    <label >{{ item.title }}</label>
+                    <input class="toggle" type="checkbox" v-model="item.isCheck">
+                    <label v-on:dblclick="edit(item)">{{ item.title }}</label>
                     <button class="destroy" v-on:click="delTodo(item)"></button>
                 </div>
-                <input class="edit" type="text" >
+                <input
+                    v-focu="edits === item"
+                    class="edit" type="text"
+                    v-model="item.title"
+                    v-on:blur="edited(item)"
+                    v-on:keyup.enter="edited(item)"
+                    v-on:keyup.esc="cancel(item)"
+                >
             </li>
         </ul>
     </div>
