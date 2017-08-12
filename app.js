@@ -12,6 +12,21 @@ var storeA = {
 
 var list = storeA.fetchGet("storeAge");
 
+var filter = {
+    all:function (list) {
+      return list;
+    },
+    finished:function (list) {
+        return list.filter(function (item) {
+            return item.isCheck;
+        });
+    },
+    unfinished:function (list) {
+        return list.filter(function (item) {
+            return !item.isCheck;
+        })
+    }
+};
 
 /*var list = [
     {
@@ -30,7 +45,8 @@ var vm = new Vue({
         list:list,
         todo:"",
         edits:"",
-        beforeTitle:""
+        beforeTitle:"",
+        visibility:"all"
     },
     /*watch:{
         //list(){

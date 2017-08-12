@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Props</title>
+    <link rel="stylesheet" href="src/css/bootstrap.min.css">
+    <script src="src/vue.min.js"></script>
+</head>
+<body>
+    <div id="app" class="container">
+        <custom type="danger" title="Change a few things up and try submitting again."></custom>
+        <custom type="success" title="This alert needs your attention, but it's not super important." v-bind:close="false"></custom>
+        <custom v-bind:close="false"></custom>
+    </div>
+<script>
+
+    Vue.component("custom", {
+        props:{
+            type:{
+                type: String,
+                default: "info"
+            },
+            title:{
+                type:String,
+                default: "You successfully read this important alert message."
+            },
+            close:{
+                type:Boolean,
+                default:true
+            }
+        },
+        computed:{
+            classes:function() {
+                if(this.type === ""){
+                    this.type = "info";
+                }
+                return `alert-${this.type}`
+            },
+            strong:function () {
+                if(this.type === ""){
+                    this.type = "Info";
+                }
+                return this.type;
+            }
+        },
+        template:`
+            <div class="alert alert-dismissible" v-bind:class="[classes]" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close" v-show="close"><span aria-hidden="true">&times;</span></button>
+                <strong>{{strong}}!</strong> {{title}}
+            </div>
+        `
+    });
+    var vm = new Vue({
+        el:"#app"
+    });
+</script>
+</body>
+</html>

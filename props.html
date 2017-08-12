@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Props</title>
+    <script src="src/vue.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <h3>父组件 {{count}}</h3>
+        <custom-component v-bind:count="count" v-on:incr="countHandle"></custom-component>
+    </div>
+<script>
+    Vue.component('custom-component', {
+        props:{
+            count:{
+                type:Number
+            }
+        },
+        data(){
+            return {
+                newCount:this.count
+            }
+        },
+        computed:{
+            newCount2(){
+                return this.newCount;
+            }
+        },
+        template:`
+            <div>
+                <h2>custom-component</h2>
+                <input type="button" value="Change Count" v-on:click="changeCount">
+                {{newCount2}}
+            </div>
+        `,
+        methods:{
+            changeCount(){
+                this.newCount++;
+                this.$emit("incr");
+            }
+        }
+    });
+    new Vue({
+        el:"#app",
+        data:{
+            count:0
+        },
+        methods:{
+            countHandle(){
+                this.count++;
+            }
+        }
+    })
+</script>
+</body>
+</html>

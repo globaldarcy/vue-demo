@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Props</title>
+    <link rel="stylesheet" href="src/css/bootstrap.min.css">
+    <script src="src/vue.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <custom modal-title="tixing" v-on:ok="fOk">
+            <ul slot="content" v-for="item of list">
+                <li>{{item}}</li>
+            </ul>
+        </custom>
+        <custom v-on:cancel="fCancel">
+            <ul slot="content" v-for="item of list">
+                <li>{{item}}</li>
+            </ul>
+        </custom>
+    </div>
+<script>
+
+    Vue.component("custom", {
+        props:{
+            modalTitle:{
+                type: String,
+                default:"默认title"
+            }
+        },
+        methods:{
+            onOk:function () {
+                console.log("OK");
+                this.$emit("ok");
+            },
+            onCancel:function () {
+                console.log("Cancel");
+                this.$emit("cancel");
+            }
+        },
+        template:`
+           <div class="modal show " style="position: relative;">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title">{{modalTitle}}</h4>
+                        </div>
+                        <div class="modal-body">
+                            <slot name="content">
+                                 <p>One fine body&hellip;</p>
+                            </slot>
+
+                        </div>
+                        <div class="modal-footer">
+                            <slot name="btn">
+                            <button type="button" class="btn btn-default" data-dismiss="modal" v-on:click="onOk">Close</button>
+                            <button type="button" class="btn btn-primary" v-on:click="onCancel">Save changes</button>
+
+                            </slot>
+                        </div>
+                    </div>
+               </div>
+           </div>
+        `
+    });
+    var list = [..."abcd"];
+    var vm = new Vue({
+        el:"#app",
+        methods:{
+            fOk:function () {
+                console.log("1 ok");
+            },
+            fCancel:function () {
+                console.log("1 cancel");
+            }
+        }
+    });
+</script>
+</body>
+</html>
