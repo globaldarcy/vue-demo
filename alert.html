@@ -8,9 +8,15 @@
 </head>
 <body>
     <div id="app" class="container">
-        <custom type="danger" title="Change a few things up and try submitting again."></custom>
+        <custom type="danger" title="Change a few things up and try submitting again." v-bind:show="true" v-on:click-close="closeAlert" v-show="hide"></custom>
         <custom type="success" title="This alert needs your attention, but it's not super important." v-bind:close="false"></custom>
-        <custom v-bind:close="false"></custom>
+        <custom v-bind:close="false" style="background-color: plum;">
+            <ul slot="content">
+                <li>1</li>
+                <li>2</li>
+                <li>3</li>
+            </ul>
+        </custom>
     </div>
 <script>
 
@@ -27,7 +33,12 @@
             close:{
                 type:Boolean,
                 default:true
-            }
+            },
+            show:{
+                type:Boolean,
+                default:false
+            },
+            style:String,
         },
         computed:{
             classes:function() {
@@ -44,14 +55,28 @@
             }
         },
         template:`
-            <div class="alert alert-dismissible" v-bind:class="[classes]" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close" v-show="close"><span aria-hidden="true">&times;</span></button>
-                <strong>{{strong}}!</strong> {{title}}
+            <div class="alert alert-dismissible" v-bind:class="[classes]" role="alert" style="style">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close" v-show="close" v-on:click="closeHandle"><span aria-hidden="true">&times;</span></button>
+                <strong v-show="show">{{strong}}!</strong> <slot name="content">{{title}}</slot>
             </div>
-        `
+        `,
+        methods:{
+            closeHandle:function () {
+                this.$emit("click-close");
+            }
+        }
     });
     var vm = new Vue({
-        el:"#app"
+        el:"#app",
+        data:{
+            hide:true
+        },
+        methods:{
+            closeAlert(){
+                this.hide = false;
+                console.log(111);
+            }
+        }
     });
 </script>
 </body>

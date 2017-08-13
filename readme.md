@@ -3,17 +3,17 @@
 ### 2. Vue两个核心点
     - 响应的数据绑定(Object.definedProperty中的setter/getter)
     - 组合的视图组件
-### 3.虚拟DOM
-### 4.MVVM模式
+### 3. 虚拟DOM
+### 4. MVVM 模式
     - M: Model 数据模型 let data = {};
     - V: View 视图模版 DOM
     - VM: View-Model 视图模型 new Vue();
-### 5.声明式渲染
+### 5. 声明式渲染
     - 声明式 无需关心如何实现
         使用map方法
     - 命令式 自己来实现
         使用for循环
-### 6.Vue指令
+### 6. Vue指令
     - v-on 缩写@    v-on:click="handle('ok', $event)"
     - v-bind 缩写:   v-bind:src="imageSrc"
     - v-model    v-model="item.isChecked"
@@ -76,3 +76,40 @@
             column-rule
    ### 用户界面
         box-sizing: content-box|border-box|inherit;
+
+## 新技术
+    ####deeplearn.js
+    ####Koltin
+    
+##CommonJS模块规范
+    > CommonJS是同步加载，用于服务器端
+    根据这个规范，每个文件就是一个模块，有自己的作用域。
+    在一个文件里面定义的变量、函数、类，都是私有的，对其他文件不可见。 
+##CommonJS特点  
+    - 所有代码都运行在模块作用域，不会污染全局作用域。
+    - 模块可以多次加载，但是只会在第一次加载时运行一次，
+    然后运行结果就被缓存了，以后再加载，就直接读取缓存结果。
+    要想让模块再次运行，必须清除缓存。
+    - 模块加载的顺序，按照其在代码中出现的顺序。    
+    
+##AMD规范
+    > 是异步加载，用于客户端
+    `require(['math'], function (math) {
+　　      math.add(2, 3);
+    });`
+    目前，主要有两个Javascript库实现了AMD规范：require.js和curl.js。
+    
+##CMD 是延迟执行
+
+##ES6
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
