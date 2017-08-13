@@ -100,13 +100,9 @@
 
 > 是异步加载，用于客户端
 
-` 
-require(['math'], function (math) {
-
-    math.add(2, 3);
-
-});
- `
+    require(['math'], function (math) {
+        math.add(2, 3);
+    });
     
     目前，主要有两个Javascript库实现了AMD规范：require.js和curl.js。
     
