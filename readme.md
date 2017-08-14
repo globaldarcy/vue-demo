@@ -108,6 +108,9 @@
     
 ## CMD 是延迟执行
 
+## call和apply的用法
+    Function.prototype.apply
+
 ## ES6
     
     
