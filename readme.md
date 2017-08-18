@@ -1,8 +1,8 @@
 ## Vue
 ### 1. 渐进式框架
-### 2. Vue两个核心点
-    - 响应的数据绑定(Object.definedProperty中的setter/getter)
-    - 组合的视图组件
+### 2. Vue两个核心思想
+    - (数据驱动)响应的数据绑定(Object.definedProperty中的setter/getter)
+    - (组件化)组合的视图组件
 ### 3. 虚拟DOM
 ### 4. MVVM 模式
     - M: Model 数据模型 let data = {};
